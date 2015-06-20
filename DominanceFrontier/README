@@ -1,0 +1,6 @@
+TO DO:
+the only function that is unfinished is the getPred() in Grpah.cpp:78 for the algorithm to work. What it does is to return all predecessors of the node. However, I got other stuff to work on for now and no time to finish it up.
+
+A little drawback was encountered when I chose a adjacency list representation rather than a adajacent matrix. Doing so would make retriving predecessors much easier and faster. For the current version, a few linear searchs have been done, which could be furtuer optimized for performance, but it is good enough for the prototype.
+
+Overall, this algorithm isn't trivial and it took me a lot of time to debug all kinds of subtle errors. it works fine based on the test cases I've performed, e.g computing dominators or each node and immediate dominator and so on. After the completion of the getPred() function, everything should work fine. 

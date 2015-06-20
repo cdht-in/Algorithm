@@ -1,0 +1,20 @@
+To compile: gcc 2q.c Hash.c && ./a.out
+
+the main funciton is in 2q.c file and the variable qsize is used to specify the size of the 2q implementation. Indeed, the variable is split in half and each queue has size of qsize / 2. 
+
+the array addr is used to simulate memory access used in the superscalar project, e.g. memory address is a 32-bit integer. Three test cases were performend:
+
+1. unique references
+2. adjacent duplicates references 
+3. sparse duplicates references
+
+The main point of the project is to compare the performance of the 2Q implementation with traditional LRU algorithm. Specifically, it is to measure the 2Q performance under the circumstances where LRU falls short: when the references are sparsely located, the LRU is expected to have worse performance because the sparely located duplicates could be swapped out because the algorithm needs to replace them, which leads to cache miss when those references are generated again.
+
+Therefore, to use the 2Q implementation, modification only needs to be done to the addr[] which could hold the hard-coded integers, e.g. referneces. 
+
+As an example, 
+1. unique references => int addr[] = {1,2,3,4,5,6,7,8,9}
+2. adjacent duplicates references => int addr[] = {0, 1, 1, 2, 2, 3, 3, 3, 3, 4, 5, 5, 6, 6}
+3. sparse duplicates references => int addr[] = {1,2,3,3,2,4,4,1,1,1,2,2}
+
+NOTE: the measurements used in the report, e.g hit rate, were extracted from a different test sets that I used on other projects. Therefore, the exact measurement might be easy to be reproduced.
