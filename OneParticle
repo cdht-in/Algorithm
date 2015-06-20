@@ -1,0 +1,77 @@
+Step 1
+Write a decoder:
+…..[num]x[char].... => …..[char][char]...[char].... [char] [num] times.
+
+Example:
+abc3xqbbb = abcqqqbbb
+
+
+Solution 1:
+
+void translaterHelper(string& s, int start)
+{
+	if(start > s.size())
+		return;
+	for(int i = start; i <= s.size() - 1; i++)
+{
+		if(isNumX(s[i) == false)
+			continue;
+		string newString = “”;
+	
+		bool flag = false;
+		for(int j = 0; j < (int)(s[i] - ‘0’); j++)
+{
+	if(i + 2 < s.size() && isChar(s[i + 2]))
+			{
+newString += s[i + 2];
+
+}
+else
+{
+	flag = true;
+break;
+}
+}
+		
+		if(flag)
+{
+return;
+}
+		
+s.erase(s.begin() + i,3);
+s.insert(s.begin() + i,newString); 
+translaterHelper(s,i + newString.size());
+}
+}
+
+void translate(string s)
+{
+	if(s.size() == 0)
+		return;
+
+	translateHelper(s,0);
+}
+
+
+Step 2
+33xx => 3xxxx
+
+“4xa” <encoding> =>   1x41xx1xa <decoding> => 4#1xx
+
+string s = “4xa”;
+string s1 = “4xxxa”;
+string encodedS = “”;
+int p = 0;
+for(int i = 0; i < s.size(); i++)
+{
+	int j = i;
+	while(j  + 1< s.size() && s[j] == s[j + 1]);
+	{
+		j++;
+	}
+	int c = j - i + 1;
+	string tmp = to_string(c) + “x” + s[i];
+	encodedS += tmp;
+
+	i = j;
+}

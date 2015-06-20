@@ -1,0 +1,15 @@
+The best way to practice algorithm is to pragram, leetcode is an excellent resources, make sure you are familiar with the problems on there https://leetcode.com/problemset/algorithms/
+
+another algorithm site: https://sites.google.com/site/indy256/system/app/pages/sitemap/hierarchy
+
+http://www.programcreek.com/2012/11/top-10-algorithms-for-coding-interview/
+
+DP problem: http://people.cs.clemson.edu/~bcdean/dp_practice/
+
+geekforgeeks: http://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/
+
+morris binary tree traveral: http://www.cnblogs.com/AnnieKim/archive/2013/06/15/MorrisTraversal.html
+
+design: http://blog.csdn.net/sigh1988/article/details/9790337
+http://www.mitbbs.com/article_t/JobHunting/32777529.html
+http://fisherlei.blogspot.com/2014/10/codingtmds-reading-list_23.html
