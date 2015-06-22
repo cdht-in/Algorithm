@@ -37,7 +37,7 @@ int ComputeEquation(const vector<string>& rpn)
 	vector<int> result;
 	for(int i = 0; i < rpn.size(); i++)
 	{
-		if(rpn[i] == "+" || rpn[i] == "-")
+		if(rpn[i] == "+" || rpn[i] == "-" || rpn[i] == "*" || rpn[i] == "*" || rpn[i] == "/")
 		{
 			int b = result.back();
 			result.pop_back();
@@ -51,6 +51,14 @@ int ComputeEquation(const vector<string>& rpn)
 			else if(rpn[i] == "-")
 			{
 				result.push_back(a - b);
+			}
+			else if(rpn[i] == "*")
+			{
+				result.push_back(a * b);
+			}
+			else if(rpn[i] == "/")
+			{
+				result.push_back(a / b);	
 			}
 		}
 		else
@@ -136,10 +144,4 @@ int calculate(string s)
 	*/
 	
 	return ComputeEquation(reversedPolish);
-}
-
-int main()
-{
-	string s = "1-11";
-	cout << calculate(s) << endl;
 }
