@@ -89,6 +89,20 @@ class BinarySearchTree
 
 	}
 
+	void KeysHelper(TreeNode* node, int key1, int key2,
+			vector<TreeNode*>& nodes)
+	{
+		if (node == 0)
+			return;
+
+		KeysHelper(node->left, key1, key2, nodes);
+		if (node->val >= key1 && node->val <= key2)
+		{
+			nodes.push_back(node);
+		}
+		KeysHelper(node->right, key1, key2, nodes);
+	}
+
 	TreeNode* MinHelper(TreeNode* node)
 	{
 		while (node)
@@ -419,6 +433,13 @@ public:
 		if (mRoot == 0)
 			return;
 		mRoot = DeleteHelper(mRoot, key);
+	}
+
+	vector<TreeNode*> Keys(int key1, int key2)
+	{
+		vector<TreeNode*> nodes;
+		KeysHelper(mRoot, key1, key2, nodes);
+		return nodes;
 	}
 
 };

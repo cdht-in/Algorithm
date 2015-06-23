@@ -47,4 +47,14 @@ int main()
 	tree.Delete(key);
 	tree.PrintTreeInOrder();
 
+	int key1 = 3;
+	int key2 = 8;
+	cout << "keys between " << key1 << " and " << key2 << endl;
+	vector<TreeNode*> nodes = tree.Keys(key1, key2);
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		cout << nodes[i]->val << " ";
+	}
+	cout << endl;
+
 }
