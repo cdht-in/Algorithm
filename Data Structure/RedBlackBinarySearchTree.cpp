@@ -18,7 +18,6 @@ struct RedBlackTreeNode : public TreeNode
 
 class RedBlackBST : public BinarySearchTree
 {
-	//RedBlackTreeNode* mRoot;
 	// Assuming that node is red and both node.left and node.left.left
     // are black, make node.left or one of its children red.
 	TreeNode* MoveRedLeft(TreeNode* node)
@@ -41,6 +40,18 @@ class RedBlackBST : public BinarySearchTree
 			node = RightRotate(node);
 			FlipColors(node);
 		}
+		return node;
+	}
+	
+	//restore red/black tree inviriant
+	TreeNode* Balance(TreeNode* node)
+	{
+		if(IsRed(node->right))
+			node = LeftRotate(node);
+		if(IsRed(node->left) && IsRed(node->left->left))
+			node = RightRotate(node);
+		if(IsRed(node->left) && IsRed(node->right))
+			FlipColors(node);
 		return node;
 	}
 		
@@ -73,9 +84,37 @@ class RedBlackBST : public BinarySearchTree
 			
 			if(node->key == key)
 			{
-				//
+				TreeNode* min = MinHelper(node->right);
+				node->key = min->key;
+				node->val = min->val;
+				node->right = DeleteMinHelper(node->right);
+			}
+			else
+			{
+				node->right = DeleteHelper(node->right,key);
 			}
 		}
+		
+		return Balance(node);
+	}
+	
+	TreeNode* DeleteMinHelper(TreeNode* node)
+	{
+		if(node->left == 0)
+		{
+			delete node;
+			return 0;
+		}
+		
+		if(IsRed(node->left) == false && IsRed(node->left->left) == false)
+		{
+			node = MoveRedLeft(node);
+		}
+		
+		node->left = DeleteMinHelper(node->left);
+		
+		return Balance(node);
+		
 	}
 	
 	TreeNode* InsertHelper(TreeNode* node,int key,int val)
@@ -119,10 +158,10 @@ class RedBlackBST : public BinarySearchTree
 	
 	void FlipColors(TreeNode* node)
 	{
-		assert(IsRed(node) == false && IsRed(node->left) && IsRed(node->right));
-		((RedBlackTreeNode*)node)->color = Red;
-		((RedBlackTreeNode*)(node->left))->color = Black;
-		((RedBlackTreeNode*)(node->right))->color = Black;
+		//assert(IsRed(node) == false && IsRed(node->left) && IsRed(node->right));
+		((RedBlackTreeNode*)node)->color = ((RedBlackTreeNode*)node)->color == Red? Black:Red;
+		((RedBlackTreeNode*)(node->left))->color = ((RedBlackTreeNode*)(node->left))->color == Red? Black:Red;
+		((RedBlackTreeNode*)(node->right))->color = ((RedBlackTreeNode*)(node->right))->color == Red? Black:Red;
 	}
 	
 	TreeNode* LeftRotate(TreeNode* node)
@@ -131,8 +170,8 @@ class RedBlackBST : public BinarySearchTree
 		RedBlackTreeNode* tmp = (RedBlackTreeNode*)(node->right);
 		node->right = tmp->left;
 		tmp->left = node;
-		tmp->color = ((RedBlackTreeNode*)node)->color;
-		((RedBlackTreeNode*)node)->color = Red;
+		tmp->color = ((RedBlackTreeNode*)(tmp->left))->color;
+		((RedBlackTreeNode*)(tmp->left))->color = Red;
 		return tmp;
 	}
 	
@@ -142,8 +181,8 @@ class RedBlackBST : public BinarySearchTree
 		RedBlackTreeNode* tmp = (RedBlackTreeNode*)(node->left);
 		node->left = tmp->right;
 		tmp->right = node;
-		tmp->color = ((RedBlackTreeNode*)node)->color;
-		((RedBlackTreeNode*)node)->color = Red;
+		tmp->color = ((RedBlackTreeNode*)(tmp->right))->color;
+		((RedBlackTreeNode*)(tmp->right))->color = Red;
 		return tmp;
 	}
 	
@@ -170,9 +209,11 @@ public:
 		}
 		
 		mRoot = DeleteHelper(mRoot,key);
-	
+		size--;
 		if(IsEmpty() == false)
+		{
 			((RedBlackTreeNode*)mRoot)->color = Black;
+		}
 	}
 	
 	void Insert(int key,int val = 0)
@@ -185,7 +226,7 @@ public:
 
 int main()
 {
-	int n = 100;
+	int n = 10;
 	vector<int> keys;
 	
 	for(int i = 0; i < n; i++)
@@ -194,22 +235,32 @@ int main()
 	}
 		
 	RedBlackBST tree;
-	
-	int t0 = time(0);
+
 	for(int i = 0; i < keys.size(); i++)
 	{
 		tree.Insert(keys[i]);
 	}
-	int t1 = time(0);
-	cout << "searching a red/black tree took " << t1 - t0 << " seconds" << endl;
 	
 	tree.PrintTreeInOrder();
-	/*
+	
+	
+	for(int i = 0; i < keys.size(); i++)
+	{
+		cout << "deleting " << keys[i] << endl;
+		tree.Delete(keys[i]);
+	}
+	
 	for(int i = 0; i < keys.size(); i++)
 	{
 		tree.Contain(i);
 	}
-	*/
 	
-	//
+	
+	/*
+	int t0 = time(0);
+	int t1 = time(0);
+	cout << "searching a red/black tree took " << t1 - t0 << " seconds" << endl;
+		
+		
+	*/
 }

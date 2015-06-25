@@ -32,8 +32,6 @@ protected:
 	
 	TreeNode* mRoot;
 	int size;
-
-private:
 	
 	TreeNode* sortedArrayToBSTHelper(vector<int> &num, int l, int r)
 	{
@@ -151,7 +149,7 @@ private:
 		return node;
 	}
 
-	TreeNode* DeleteMaxHelper(TreeNode* node)
+	virtual TreeNode* DeleteMaxHelper(TreeNode* node)
 	{
 		if (node->right == 0)
 		{
@@ -163,7 +161,7 @@ private:
 		return node;
 	}
 
-	TreeNode* DeleteMinHelper(TreeNode* node)
+	virtual TreeNode* DeleteMinHelper(TreeNode* node)
 	{
 		if (node->left == 0)
 		{
