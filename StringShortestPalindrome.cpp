@@ -15,6 +15,7 @@ Special thanks to @ifanchu for adding this problem and creating all test cases. 
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -99,13 +100,32 @@ string shortestPalindromeI(string s)
 }
 
 
-
-
-
+//O(n^2)
+string shortestPalindromeII(string s)
+{
+	if(s.size() == 0)
+		return s;
+	
+	int index = 0;
+	
+	for(int i = s.size() - 1; i >= 0; i--	)
+	{
+		if(isPalindrome(s.substr(0,i + 1)))
+		{
+			index = i;
+			break;
+		}
+	}
+		
+	string reversed = s.substr(index + 1);
+	reverse(reversed.begin(),reversed.end());
+	
+	return reversed + s;
+}
 
 
 int main()
 {
-	string s = "aaaaaaaaaaaaaaa";
-	cout << shortestPalindromeI(s) << endl;
+	string s = "";
+	cout << shortestPalindromeII(s) << endl;
 }
