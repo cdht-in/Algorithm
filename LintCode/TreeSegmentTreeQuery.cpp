@@ -42,16 +42,18 @@ public:
     }
 };
 
+//O(n) to build the tree
 SegmentTreeNode * build(int start, int end,vector<int>& vec)
 {	
 	assert(start <= end);
 	
+	SegmentTreeNode* node = new SegmentTreeNode(start,end,0);
 	if(start == end)
 	{
-		return new SegmentTreeNode(start,end,vec[start]);
+		node->max = vec[start];
+		return node;
 	}
 	
-	SegmentTreeNode* node = new SegmentTreeNode(start,end,0);
 	int mid = start + (end - start) / 2;
 	node->left = build(start,mid,vec);
 	node->right = build(mid + 1, end,vec);
@@ -62,6 +64,8 @@ SegmentTreeNode * build(int start, int end,vector<int>& vec)
 	return node;
 }
 
+//query the max in the interval [start,end]
+//log(n)
 int query(SegmentTreeNode *root, int start, int end) 
 {	
 	if(root->start == start && root->end == end)
@@ -75,6 +79,7 @@ int query(SegmentTreeNode *root, int start, int end)
 	{
 		return query(root->left,start,end);
 	}
+	//NOTE here the right child starts at mid + 1
 	else if(start > mid)
 	{
 		return query(root->right,start,end);
