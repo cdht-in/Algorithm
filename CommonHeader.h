@@ -11,5 +11,6 @@
 #include <utility>
 #include <cassert>
 #include <set>
+#include <sstream>
 
 using namespace std;
