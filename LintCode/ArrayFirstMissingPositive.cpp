@@ -37,11 +37,12 @@ int firstMissingPositive(vector<int> A)
 			return i + 1;
 	}
 	
+	//A.size() is stored in A[A.size() - 1];
 	return A.size() + 1;
 }
 
 int main()
 {
-	vector<int> A = {};
+	vector<int> A = {1,2,3};
 	cout << firstMissingPositive(A) << endl;
 }
