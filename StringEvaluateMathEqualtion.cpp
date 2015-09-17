@@ -4,12 +4,7 @@
 
 */
 
-#include <vector>
-#include <iostream>
-#include <string>
-#include <map>
-
-using namespace std;
+#include "./commonHeader.h"
 
 int StringToNum(const string& s)
 {
@@ -156,12 +151,4 @@ int ComputeEquation(const string& s)
 	
 	//there should be only 1 element left in the stack
 	return result[0];
-}
-
-int main()
-{
-	string s = "(1+ 1 )";
-	
-	cout << ComputeEquation(s) << endl;
-	
 }

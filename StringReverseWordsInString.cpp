@@ -41,6 +41,39 @@ void reverseWords(string &s) {
 	    s = rs;  
 }
 
+void Swap(string& s, int l, int r)
+{
+	for(int i = 0; i < (r - l) / 2; i++)
+	{
+		char tmp = s[l + i];
+		s[l + i] = s[r - 1- i];
+		s[r - 1 - i] = tmp;
+	}
+}
+
+//assume no leading and trailing white space as mentioned in the description
+void Reverse(string& s)
+{
+	
+	int l = 0, r = 0;
+	//reverse each word
+	while(r < s.size())
+	{
+		while(r < s.size() && s[r] != ' ')
+		{
+			r++;
+		}
+		
+		//one word between l and r
+		Swap(s,l,r);
+		
+		l = r + 1;
+		r++;
+	}
+	Swap(s,0,s.size());
+}
+
+
 int main(){
 	string s = "the sky is blue";
 	reverseWords(s);

@@ -12,5 +12,6 @@
 #include <cassert>
 #include <set>
 #include <sstream>
+#include <map>
 
 using namespace std;
