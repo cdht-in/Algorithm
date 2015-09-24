@@ -142,6 +142,45 @@ int backPackI(int m, vector<int> A)
 	
 }
 
+//second implementation
+int backPackII(int m, vector<int> A)
+{
+	vector<vector<int> > dp(m + 1, vector<int>(A.size() + 1,0));
+	for(int i = 1; i <= m; i++)
+	{
+		for(int j = 1; j <= A.size(); j++)
+		{
+			if(i >= A[j - 1])
+			{
+				dp[i][j] = std::max(dp[i][j], A[j - 1] + dp[i - A[j - 1]][j - 1]);
+			}
+			
+			dp[i][j] = std::max(dp[i][j], dp[i][j - 1]);
+		}
+	}
+	
+	return dp[m][A.size()];
+}
+
+int backPackIIWithMemoryOptimization(int m, vector<int> A)
+{
+	vector<int> dp(m + 1,0);
+	
+	for(int i = 1; i <= A.size(); i++)
+	{
+		for(int j = m; j >= 1; j--)
+		{
+			if(j >= A[i - 1])
+			{
+				dp[j] = std::max(dp[j], A[i - 1] + dp[j - A[i - 1]]);
+			}
+		}
+	}
+		
+	return dp[m];
+}
+
+
 int main()
 {
 	vector<int> A = {2,3,5,7};
