@@ -18,42 +18,43 @@ Given [4,4,5,6,7,0,1,2] return 0
 
 int findMin(vector<int> &num) 
 {
-	if(num.size() == 1)
-		return num[0];
-	
 	int l = 0, r = num.size() - 1, mid = 0;
-	while(l <= r)
+	//0, 10, 10
+	//10,0,10
+	while(l < r)
 	{
 		mid = l + (r - l) / 2;
-		
-		if(mid >= 1 && num[mid - 1] > num[mid])
-		{
-			return num[mid];
-		}	
-		
-		int i = mid;
-		while(i < num.size() && num[mid] == num[i])
-		{
-			i++;
-		}
-		
-		if(i < num.size() && num[i] >= num[num.size() - 1])
+		//this mean the left part is unsorted
+		if(num[mid] > num[r])
 		{
 			l = mid + 1;
 		}
+		//note here if is set to be mid - 1, it could filter out the solution for case like //10,0,10
+		else if(num[mid] < num[r])s
+		{
+			r = mid;
+		}
 		else
 		{
-			r = mid - 1;
+			r--;
 		}
 	}
 	
-	//sorted array
 	return num[l];
 }
 
+
+
 int main()
 {
-	vector<int> vec = {1,1,-1,1};
+	//0, 10, 10, l <= mid <= r, r = mid - 1;
+	//0,0,0 r == 0
+	//1,2,3, r = mid - 1;
+	
+	//1,1,0,1,1 r = mid - 1 => l
+	//1,1,1,1
+	
+	vector<int> vec = {0,10,10};
 	cout << findMin(vec) << endl;
 	
 }
