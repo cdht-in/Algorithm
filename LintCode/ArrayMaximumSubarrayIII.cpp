@@ -80,7 +80,7 @@ int maxSubArray(vector<int> nums, int k)
 	return max;
 }
 
-//dp
+//dp O(n^3)
 int maxsubArrayI(vector<int> nums, int k)
 {
 	if(nums.size() < k)
