@@ -31,7 +31,24 @@
 class Comparator 
 {
 	public:
-		int cmp(string a, string b);
+		int cmp(string a, string b)
+		{
+			/*
+			string lowerA = A;
+			std::transform(b.begin(), b.end(), b.begin(), ::tolower);
+			*/
+			string lowerB = b;
+			std::transform(lowerB.begin(), lowerB.end(), lowerB.begin(), ::tolower);
+			if (a == lowerB)
+			{
+				return 0;
+			}
+			else if(a < lowerB)
+			{
+				return -1;
+			}
+			return 1;
+		}
 };
 
 //brute force O(n^2)
@@ -54,80 +71,52 @@ void sortNutsAndBolts(vector<string> &nuts, vector<string> &bolts, Comparator co
 
 int partition(vector<string>& vec,int start, int end, string& pivot,Comparator& compare)
 {
-	/*
-	3-way partition, but doesn't return the location of the pivot
-	
-	int less = start, equal = start, greater = end;
-	while(equal <= greater)
+	int l = start, mid = start, r = end;
+	int p = start;
+	while(mid <= r)
 	{
-		if(compare.cmp(vec[equal],pivot) < 0)
-		{
-			string tmp = vec[equal];
-			vec[equal] = vec[less];
-			vec[less] = tmp;
-			less++;
-			equal++;
+		if(compare.cmp(vec[l],pivot) < 0)
+		{			
+			l++;
+			mid++;
 		}
-		else if(compare.cmp(vec[equal],pivot) == 0)
+		else if(compare.cmp(vec[l],pivot) == 0)
 		{
-			equal++;
+			p = l;
+			l++;
+			mid++;
 		}
 		else
 		{
-			string tmp = vec[greater];
-			vec[greater] = vec[equal];
-			vec[equal] = tmp;
-			greater--;
+			string tmp = vec[r];
+			vec[r] = vec[l];
+			vec[l] = tmp;
+			r--;
 		}
 	}
 	
-	return equal - 1;
-	*/
+	string tmp = vec[p];
+	vec[p] = vec[r];
+	vec[r] = tmp;
 	
-	int less = start, equal = start, greater = end;
-	while(less <= greater)
-	{
-		if(compare.cmp(vec[less],pivot) <= 0)
-		{
-			less++;
-		}
-		else if(compare.cmp(vec[less],pivot) == 0)
-		{
-			string tmp = vec[less];
-			vec[less] = vec[start];
-			vec[start] = tmp;			
-		}
-		else
-		{
-			string tmp = vec[greater];
-			vec[greater] = vec[less];
-			vec[less] = tmp;
-			greater--;
-		}
-	}
-	
-	string tmp = vec[less - 1];
-	vec[less - 1] = vec[start];
-	vec[start] = tmp;
-	
-	return less - 1;
+	return r;
 }
 
 void sortNutsAndBoltsIHelper(vector<string> &nuts, int start, int end,vector<string> &bolts, Comparator& compare)
 {
-	if(start >= end)
+	if(start > end)
 	{
 		return;
 	}
 	
 	//choose the bolts first element as the pivot and sort each others
-	int p = partition(nuts,start,end,bolts[start],compare);
+	 int p = partition(nuts,start,end,bolts[start],compare);
 	
-	partition(bolts,start,end,nuts[p],compare);
+	 partition(bolts,start,end,nuts[p],compare);
 	
-	sortNutsAndBoltsIHelper(nuts,start, p - 1, bolts,compare);
+	 sortNutsAndBoltsIHelper(nuts,start, p - 1, bolts,compare);
 	
-	sortNutsAndBoltsIHelper(nuts,p + 1, end, bolts,compare);
+	 sortNutsAndBoltsIHelper(nuts,p + 1, end, bolts,compare);
 }
 
 void sortNutsAndBoltsI(vector<string> &nuts, vector<string> &bolts, Comparator compare)
@@ -137,4 +126,20 @@ void sortNutsAndBoltsI(vector<string> &nuts, vector<string> &bolts, Comparator c
 
 int main()
 {
+	vector<string> nuts = {"ab","bc","dd","gg"};
+	vector<string> bolts = {"AB","GG","DD","BC"};
+	Comparator compare;
+	sortNutsAndBoltsI(nuts,bolts,compare);
+	for(auto& i : nuts)
+	{
+		cout << i << " ";
+	}
+	cout << endl;
+	
+	for(auto& i : bolts)
+	{
+		cout << i << " ";
+	}
+	cout << endl;
+	
 }
