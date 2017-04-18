@@ -1,5 +1,7 @@
 package algo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -25,29 +27,37 @@ public class LongestIncreasingSubsequence
 {
     public int lengthOfLIS(int[] nums)
     {
-        if (nums.length == 0)
+        int maxLen = 0;
+
+        List<Stack<Integer>> powerSet = new ArrayList<Stack<Integer>>();
+
+        for (int j = 0; j < nums.length; j++)
         {
-            return 0;
+
+            List<Stack<Integer>> subsets = new ArrayList<Stack<Integer>>();
+            for (Stack each : powerSet)
+            {
+                Integer top = (Integer) each.peek();
+                if (nums[j] > top)
+                {
+                    Stack<Integer> subSet = (Stack<Integer>) each.clone();
+                    subSet.push(nums[j]);
+
+                    subsets.add(subSet);
+                }
+            }
+
+            Stack<Integer> stack = new Stack<Integer>();
+            stack.push(nums[j]);
+
+            powerSet.add(stack);
+
+            powerSet.addAll(subsets);
         }
 
-        int maxLen = 1;
-        Stack<Integer> stack = new Stack();
-        for (int i = 0; i < nums.length; i++)
+        for (Stack each : powerSet)
         {
-
-            stack.clear();
-            stack.push(nums[i]);
-            for (int j = i + 1; j < nums.length; j++)
-            {
-                Integer top = stack.peek();
-                if (nums[j] > top.intValue())
-                {
-                    stack.push(nums[j]);
-                }
-
-                maxLen = Math.max(stack.size(), maxLen);
-
-            }
+            maxLen = Math.max(each.size(), maxLen);
         }
 
         return maxLen;
@@ -55,10 +65,19 @@ public class LongestIncreasingSubsequence
 
     public static void main(String[] args) throws Exception
     {
-        int[] nums4 = new int[]{2, 15, 3, 7, 8, 6, 18};
+        List<int[]> tests = new ArrayList<int[]>();
+
+        tests.add(new int[]{2, 15, 3, 7, 8, 6, 18});
+        tests.add(new int[]{2, 5, 3, 4});
 
         LongestIncreasingSubsequence longestIncreasingSubsequence = new LongestIncreasingSubsequence();
-        System.out.println(longestIncreasingSubsequence.lengthOfLIS(nums4));
+
+        for (int i = 0; i < tests.size(); i++)
+        {
+            System.out.println(longestIncreasingSubsequence.lengthOfLIS(tests.get(i)));
+        }
+
+
     }
 
 }
